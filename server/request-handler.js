@@ -48,6 +48,11 @@ var requestHandler = function(request, response) {
   } else if (request.url.startsWith('/classes/messages') && request.method === 'POST') {
     //client is requesting a POST to send a message
     postMessage(request, response);
+  } else if (request.method === "OPTIONS") {  
+    //client is doing initial options request
+    //respond back to client with our headers
+    response.writeHead(204, defaultCorsHeaders);
+    response.end();
   } else {
     //response to unknown request
     var statusCode = 404;
