@@ -4,27 +4,23 @@ var fs = require('fs');
 
 //preload web server files
 var clientFiles = {
-  '/index.html' : {
+  '/index.html': {
     file: fs.readFileSync(__dirname + '/../client/index.html'),
     type: 'text/html'
   },
-  '/' : {
+  '/': {
     file: fs.readFileSync(__dirname + '/../client/index.html'),
     type: 'text/html'
   },
-  '/styles/styles.css' : {
+  '/styles/styles.css': {
     file: fs.readFileSync(__dirname + '/../client/styles/styles.css'),
     type: 'text/css'
   },
-  '/scripts/app.js' : {
+  '/scripts/app.js': {
     file: fs.readFileSync(__dirname + '/../client/scripts/app.js'),
     type: 'text/javascript'
   },
-  '/scripts/jquery.js' : {
-    file: fs.readFileSync(__dirname + '/../client/scripts/jquery.js'),
-    type: 'text/javascript'
-  },
-  '/images/spiffygif_46x46.gif' : {
+  '/images/spiffygif_46x46.gif': {
     file: fs.readFileSync(__dirname + '/../client/images/spiffygif_46x46.gif'),
     type: 'image/gif'
   }
@@ -77,7 +73,7 @@ var requestHandler = function(request, response) {
   } else if (request.url.startsWith('/classes/messages') && request.method === 'POST') {
     //client is requesting a POST to send a message
     postMessage(request, response);
-  } else if (request.method === "OPTIONS") {  
+  } else if (request.method === 'OPTIONS') {  
     //client is doing initial options request
     //respond back to client with our headers
     response.writeHead(204, defaultCorsHeaders);
