@@ -7,6 +7,8 @@ var storeMessage = message => {
   //create a timestamp for message using current timestamp
   message.createdAt = new Date(message.objectId).toJSON();
   message.updatedAt = message.createdAt;
+  //improve compatability between clients and tests
+  message.message ? message.text = message.message : message.message = message.text;
   //storeMessage stores the message that was passed in
   messages.push(message);
   //return response object
