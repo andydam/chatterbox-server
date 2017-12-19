@@ -1,5 +1,34 @@
 //import chatter functions and methods
 var chatter = require('./chatter');
+var fs = require('fs');
+
+//preload web server files
+var clientFiles = {
+  '/index.html' : {
+    file: fs.readFileSync(__dirname + '/../client/index.html'),
+    type: 'text/html'
+  },
+  '/' : {
+    file: fs.readFileSync(__dirname + '/../client/index.html'),
+    type: 'text/html'
+  },
+  '/styles/styles.css' : {
+    file: fs.readFileSync(__dirname + '/../client/styles/styles.css'),
+    type: 'text/css'
+  },
+  '/scripts/app.js' : {
+    file: fs.readFileSync(__dirname + '/../client/scripts/app.js'),
+    type: 'text/javascript'
+  },
+  '/scripts/jquery.js' : {
+    file: fs.readFileSync(__dirname + '/../client/scripts/jquery.js'),
+    type: 'text/javascript'
+  },
+  '/images/spiffygif_46x46.gif' : {
+    file: fs.readFileSync(__dirname + '/../client/images/spiffygif_46x46.gif'),
+    type: 'image/gif'
+  }
+};
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
 var defaultCorsHeaders = {
@@ -53,6 +82,17 @@ var requestHandler = function(request, response) {
     //respond back to client with our headers
     response.writeHead(204, defaultCorsHeaders);
     response.end();
+  } else if (clientFiles.hasOwnProperty(request.url.split('?')[0])) {
+    //client is requesting one of the chatterbox web client files
+    //pull file path from request url
+    let filePath = request.url.split('?')[0];
+    var statusCode = 200;
+    var headers = defaultCorsHeaders;
+    //return content type of desired file
+    headers['Content-Type'] = clientFiles[filePath].type;
+    response.writeHead(statusCode, headers);
+    //return desired file in body of response
+    response.end(clientFiles[filePath].file);
   } else {
     //response to unknown request
     var statusCode = 404;
