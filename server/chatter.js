@@ -10,7 +10,7 @@ var storeMessage = message => {
   //improve compatability between clients and tests
   message.message ? message.text = message.message : message.message = message.text;
   //storeMessage stores the message that was passed in
-  messages.push(message);
+  messages = [message, ...messages];
   //return response object
   return JSON.stringify({
     objectId: message.objectId,
